@@ -1,0 +1,144 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.atelier>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+
+@if (TempData["created"] != null)
+{
+    <script>
+        swal("Good job!", "Atelier created!", "success");
+    </script>
+
+}
+
+@if (TempData["name"] != null)
+{
+    <script>
+        swal("Good job!", "Atelier modifier!", "success");
+    </script>
+
+}
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Listes des ateliers</h2>
+<div class="input-group"></div>
+
+<a href="@Url.Action("Create","Ateliers")" class="btn bg-blue waves-effect m-b-15"><i class="fa fa-plus"></i> Add New Atelier</a>
+
+<div class="card">
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+
+                <thead>
+                    <tr>
+                        <th>Nom Atelier</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Etage)
+                            </td>
+                            <td>
+                                <a class='btn' href='@Url.Action("Edit","Ateliers",new {id= item.Id})'><i class='material-icons'>create</i></a>
+                                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                                @{ var id = Json.Encode(item.Id);}
+                                <a class='btn' onclick='Delete(@id)' @*href='@Url.Action("Delete","Equipements",new {id= item.NumSerie, url = Request.Url.AbsoluteUri})'*@><i class='material-icons'>delete</i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Nom Atelier</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+            // loadData();
+
+            $('#table').DataTable({
+                //"serverSide": true,
+                //"data": data,
+                "language": {
+                    "emptyTable": "Pas d'atelier disponible",
+                    "infoEmpty": "Vide",
+                    "zeroRecords": "Not found",
+                    "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                    "search": "Recherche:",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Suivant",
+                        "previous": "Précident"
+                    },
+                },
+                dom: "Bfrtip",
+                //"scrollY": 500,
+                //"scrollX": true,
+
+                "buttons": [
+                    { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                    { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                    { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                    { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                ]
+            });
+
+
+
+        });
+
+        function Delete(id) {
+            //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Atelier!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Ateliers/Delete/" + id
+
+                        });
+                        swal("Poof! Atelier has been deleted!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                        //location.reload();
+                    } else {
+                        swal("Atelier is safe!");
+                    }
+                });
+        }
+    </script>
+}

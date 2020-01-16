@@ -1,0 +1,78 @@
+﻿@model MPSIGestionSoftSony.Models.panneequipement
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://fonts.googleapis.com/css?family=Caveat+Brush" rel="stylesheet">
+
+<h2 class="align-center" style="font-family: 'Caveat Brush', cursive;">Modifier Panne Equipement</h2>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="card container" style="width:500px">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                <div class="form-group ">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-5">Nom Panne </label>
+                        <div class="col-md-7">
+                            @Html.DropDownList("Panne_Id", null, "select panne", htmlAttributes: new { @class = "btn btn-default waves-effect dropdown-toggle", required = true })
+                            @Html.ValidationMessageFor(model => model.Panne_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="input-group"></div><div class="input-group"></div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-5">Num Serie </label>
+                        <div class="col-md-7">
+                            @Html.DropDownList("Equipement_NumSerie", null, "select Num Serie", htmlAttributes: new { @class = "btn btn-default waves-effect dropdown-toggle", required = true })
+                            @Html.ValidationMessageFor(model => model.Equipement_NumSerie, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="input-group"></div><div class="input-group"></div>
+
+                    <div class="form-group">
+                        <div class="control-label col-md-5"><label>Date Panne </label></div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.DatePE, new { htmlAttributes = new { @class = "form-control", required = true, @type = "date", @Value = Model.DatePE.ToString("yyyy-MM-dd") } })
+                            @Html.ValidationMessageFor(model => model.DatePE, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="input-group"></div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10 align-center">
+                            <input type="submit" value="Update" class="btn btn-success waves-effect" />
+                        </div>
+                    </div><div class="input-group"></div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div><div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+
+<div>
+    <a class="btn bg-pink waves-effect m-b-15" href="@Url.Action("Index", "PanneEquipements")">Back to list</a>
+</div>
+@section scripts{
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+}

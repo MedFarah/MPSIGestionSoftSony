@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="~/template/css/PlayBall.css" rel="stylesheet" />
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Bienvenue @User.Identity.Name</h2>
+
+@{
+    //serialiser les donnee
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var ListeMoisJson = js.Serialize(ViewBag.X);
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var NumberPanneJson = jss.Serialize(ViewBag.Y);
+}
+<div class="input-group"></div>
+<div class="input-group"></div>
+
+<!-- Widgets -->
+<div class="row clearfix">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-pink hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">playlist_add_check</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre des equipements est <br /> @ViewBag.Equipement</div>
+                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-cyan hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">warning</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre des equipements en panne est <br /> @ViewBag.EquipementEnPanne</div>
+                <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-light-green hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">forum</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre de HDD est <br /> @ViewBag.HDD</div>
+                <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-orange hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">warning</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre du HDD en panne est <br /> @ViewBag.HDDenPanne</div>
+                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="input-group"></div>
+
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-6 col-lg-12">
+                    <h4 class="align-center" style="font-family: 'Playball', cursive;">Nombre HDD touché par mois</h4>
+                </div>
+
+            </div>
+            <canvas id="real_time_chart" height="75"></canvas>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/js dropdownlist/jquery1.9.1.js"></script>
+    <script src="~/template/js/js dropdownlist/jquery-ui-1.11.0.js"></script>
+    <script src="~/template/js/Chart/chart.bundle.js"></script>
+    <script src="~/template/js/Chart/chart.bundle.min.js"></script>
+    <script src="~/template/js/Chart/chart.js"></script>
+    <script src="~/template/js/Chart/chart.min.js"></script>
+
+    <script>
+        var x = JSON.parse('@Html.Raw(ListeMoisJson)');
+                var y = JSON.parse('@Html.Raw(NumberPanneJson)');
+
+        var ctx = $('#real_time_chart');
+
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+
+        data: {
+            labels: x,
+            datasets:[ {
+                backgroundColor: "rgba(59, 89, 152, 0.75)",
+                borderColor: "rgba(59, 89, 152, 1)",
+                pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
+                pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+                label:"Nombre de HDD touché par mois",
+                    data:y,
+                }],
+
+
+
+
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+
+    });
+
+    </script>
+}

@@ -1,0 +1,316 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.equipement>
+
+@{
+    ViewBag.Title = "Equipements";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/css?family=Caveat+Brush" rel="stylesheet">
+
+<h2 class="align-center" style="font-family: 'Caveat Brush', cursive;">Equipements</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/Content/lienCssJs/sweetalert.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <style>
+        #radioBtn .notActive {
+            color: #3276b1;
+            background-color: #fff !important;
+        }
+
+        a.btn:hover {
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+        }
+    </style>
+
+</head>
+<body>
+    @if (TempData["Done"] != null)
+    {
+        <script>
+
+            sweetAlert("Good job!", "Opération effectue avec success", "success");
+
+        </script>
+
+    }
+
+    @if (TempData["name"] != null)
+    {
+        <script>
+            swal("Good job!", "Equipement modifier!", "success");
+        </script>
+
+    }
+    @if (TempData["success"] != null)
+    {
+        <script>
+            swal("Good job!", "Equipement Ajouter!", "success");
+        </script>
+
+    }
+
+    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();"><i class="fa fa-plus"></i> Add New Equipement</button><br /><br />*@
+
+    <div class="container card">
+        <div class="body">
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                NumSerie
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            @*<th>
+                                    Application
+                                </th>
+                                <th>
+                                    Ip
+                                </th>
+                                <th>
+                                    Ram
+                                </th>*@
+                            <th>
+                                categorie
+                            </th>
+                            @*<th>
+                                    Model
+                                </th>*@
+                            <th>
+                                Dt_achat
+                            </th>
+                            @*<th>
+                                    IMMO
+                                </th>
+                                <th>
+                                    WinProdKey
+                                </th>
+                                <th>
+                                    System
+                                </th>*@
+                            @*<th>
+                                    SSID1
+                                </th>
+                                <th>
+                                    SSID2
+                                </th>
+                                <th>
+                                    Garantie
+                                </th>*@
+                            <th>
+                                Etat
+                            </th>
+                            <th>
+                                Dt_sortie
+                            </th>
+                            <th>
+                                Poste
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @section scripts{
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+        <script src="https:////cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+        <script src=" https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+        <script src=" https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+        <script>
+        $(document).ready(function () {
+           // loadData();
+
+
+            $.ajax ({
+
+                "url": "/Equipements/GetEquipements",
+                "dataSrc": "",
+                "type": "POST",
+
+                "datatype": "json",
+                success: function (data) {
+                    $('#table').DataTable({
+                        "bserverSide": true,
+                        "data": data,
+
+                        dom: "Bfrtip",
+                        //"scrollY": 500,
+                        //"scrollX": true,
+                        "columns": [
+                            { "data": "NumSerie", "name": "NumSerie" },
+                            { "data": "Description", "name": "Description" },
+                            //{ "data": "Application", "name": "Application" },
+                            //{ "data": "Ip", "name": "Ip" },
+                            //{ "data": "Ram", "name": "Ram" },
+                            { "data": "Categorie", "name": "Categorie" },
+                            //{ "data": "Modele", "name": "Modele" },
+                            {
+                                "data": "Dt_achat", "name": "Dt_achat", "render": function (data) {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
+                                }
+                            },
+                            //{ "data": "IMMO", "name": "IMMO" },
+                            //{ "data": "WinProdKey", "name": "WinProdKey" },
+                            //{ "data": "System", "name": "System" },
+                            //{ "data": "SSID1", "name": "SSID1" },
+                            //{ "data": "SSID2", "name": "SSID2" },
+                            //{ "data": "Garantie", "name": "Garantie" },
+                            { "data": "Etat", "name": "Etat" },
+                            {
+                                "data": "Dt_sortie", "name": "Dt_sortie", "render": function (data) {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    if (data == null) {
+                                        return "";
+                                    } else {
+                                        return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
+                                    }
+                                }
+                            },
+                            {
+                                "data": "poste.Poste1", "name": "poste.Poste1", "render": function (data) {
+                                     if (data == null) { return "Vide";} else { return data;}
+                                    //return data;
+                                   // return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
+                                }
+                            },
+                            {
+                                "data": "NumSerie", "render": function (id) {
+                                     //console.log(id);
+                                    @*//String ch = NumSerie;href='@Url.Action("Delete","Equipements")/" + id + "'*@
+                                    var myJSON = JSON.stringify(id);
+                                    return "<a class='btn'  href='@Url.Action("Edit","Equipements")/" + id + "' ><i class='material-icons'>create</i></a><a class='btn ' onclick='Delete(" + myJSON + ")'  ><i class='material-icons'>delete</i></a>";
+                                },
+                                "orderable": false,
+                                "width": "75px"
+                            },
+
+                        ],
+                        "buttons": [
+                            { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                            { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                            { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                            { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                        ]
+
+                    });
+                    //$("#table").DataTable();
+                }
+            });
+
+
+
+            });
+
+            function ValidateIPaddress(inputText) {
+                var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+                if (inputText.value.match(ipformat) || inputText.value.match('DHCP')) {
+                    //document.form1.Ip.focus();
+                    return true;
+                }
+                else {
+                    alert("You have entered an invalid IP address!");
+                   // document.form1.Ip.focus();
+                    $('#Ip').val("");
+
+
+                    return false;
+
+                }
+            }
+
+            function ValidateDate() {
+                var dateAchat = $('#Dt_achat').val();
+                var dateSortie = $('#Dt_sortie').val();
+                if ((new Date(dateSortie).getTime() - new Date(dateAchat).getTime()) < 0) {
+                    alert('Date Sortie doit etre supperieur a date achat');
+                    $('#Dt_achat').val("");
+                    $('#Dt_sortie').val("");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+
+            function Delete(id) {
+                //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this Equipement!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Equipements/Delete/" + id
+
+                                });
+                                swal("Poof! Your Equipement has been deleted!", {
+                                    icon: "success",
+
+                                }).then(function () {
+                                    location.reload();
+                                });
+                                //location.reload();
+                            } else {
+                                swal("Equipement is safe!");
+                            }
+                        });
+              }
+
+
+
+        </script>
+    }
+
+</body>
+</html>

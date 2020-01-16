@@ -1,0 +1,835 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="gestionparcdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="atelier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Etage" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="backup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumSerie" Type="varchar" MaxLength="45" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Application" Type="varchar" MaxLength="45" />
+          <Property Name="Ip" Type="varchar" MaxLength="45" />
+          <Property Name="Ram" Type="int" />
+          <Property Name="Categorie" Type="varchar" MaxLength="45" />
+          <Property Name="Modele" Type="varchar" MaxLength="45" />
+          <Property Name="Marque" Type="varchar" MaxLength="45" />
+          <Property Name="Dt_achat" Type="date" />
+          <Property Name="IMMO" Type="varchar" MaxLength="45" />
+          <Property Name="WinProdKey" Type="varchar" MaxLength="45" />
+          <Property Name="System" Type="varchar" MaxLength="45" />
+          <Property Name="Dt_sortie" Type="date" />
+          <Property Name="Etat" Type="varchar" MaxLength="45" />
+          <Property Name="SSID1" Type="varchar" MaxLength="45" />
+          <Property Name="SSID2" Type="varchar" MaxLength="45" />
+          <Property Name="Machine" Type="varchar" MaxLength="45" />
+          <Property Name="Garantie" Type="varchar" MaxLength="45" />
+          <Property Name="Poste" Type="int" />
+        </EntityType>
+        <EntityType Name="equipement">
+          <Key>
+            <PropertyRef Name="NumSerie" />
+          </Key>
+          <Property Name="NumSerie" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Machine" Type="varchar" MaxLength="45" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Application" Type="varchar" MaxLength="45" />
+          <Property Name="Ip" Type="varchar" MaxLength="45" />
+          <Property Name="Ram" Type="int" />
+          <Property Name="Categorie" Type="varchar" MaxLength="45" />
+          <Property Name="Modele" Type="varchar" MaxLength="45" />
+          <Property Name="Marque" Type="varchar" MaxLength="45" />
+          <Property Name="Dt_achat" Type="date" Nullable="false" />
+          <Property Name="IMMO" Type="varchar" MaxLength="45" />
+          <Property Name="WinProdKey" Type="varchar" MaxLength="45" />
+          <Property Name="System" Type="varchar" MaxLength="45" />
+          <Property Name="Etat" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Dt_sortie" Type="date" />
+          <Property Name="SSID1" Type="varchar" MaxLength="45" />
+          <Property Name="SSID2" Type="varchar" MaxLength="45" />
+          <Property Name="Garantie" Type="varchar" MaxLength="45" />
+          <Property Name="poste_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="hdd">
+          <Key>
+            <PropertyRef Name="NumSerie" />
+          </Key>
+          <Property Name="NumSerie" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Categorie" Type="varchar" MaxLength="45" />
+          <Property Name="Soft" Type="varchar" MaxLength="45" />
+          <Property Name="Poste_Id" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Etat" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Dt_achat" Type="date" Nullable="false" />
+          <Property Name="Dt_sortie" Type="date" />
+        </EntityType>
+        <EntityType Name="historiquepanneequipement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom_panne" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Nom_machine" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DatePE" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiquepannehdd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Panne_Nom" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Hdd_NumSerie" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DatePH" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ligne">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ligne" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="IdAtelier" Type="int" />
+        </EntityType>
+        <EntityType Name="panne">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomPanne" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Id_utilisateur" Type="int" />
+        </EntityType>
+        <EntityType Name="panneequipement">
+          <Key>
+            <PropertyRef Name="Panne_Id" />
+            <PropertyRef Name="Equipement_NumSerie" />
+          </Key>
+          <Property Name="Panne_Id" Type="int" Nullable="false" />
+          <Property Name="Equipement_NumSerie" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DatePE" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pannehdd">
+          <Key>
+            <PropertyRef Name="Panne_Id" />
+            <PropertyRef Name="Hdd_NumSerie" />
+          </Key>
+          <Property Name="Panne_Id" Type="int" Nullable="false" />
+          <Property Name="Hdd_NumSerie" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DatePH" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="poste">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Poste" Type="varchar" MaxLength="20" />
+          <Property Name="Idligne" Type="int" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User" Type="varchar" MaxLength="45" />
+          <Property Name="Password" Type="varchar" MaxLength="45" />
+          <Property Name="Role" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_atelierligne">
+          <End Role="atelier" Type="Self.atelier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ligne" Type="Self.ligne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="atelier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ligne">
+              <PropertyRef Name="IdAtelier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_equipement_poste1">
+          <End Role="poste" Type="Self.poste" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipement" Type="Self.equipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipement">
+              <PropertyRef Name="poste_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Hdd_Poste1">
+          <End Role="poste" Type="Self.poste" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdd" Type="Self.hdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="hdd">
+              <PropertyRef Name="Poste_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lignepost">
+          <End Role="ligne" Type="Self.ligne" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="poste" Type="Self.poste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="poste">
+              <PropertyRef Name="Idligne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_equipement_equipement1">
+          <End Role="equipement" Type="Self.equipement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="panneequipement" Type="Self.panneequipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipement">
+              <PropertyRef Name="NumSerie" />
+            </Principal>
+            <Dependent Role="panneequipement">
+              <PropertyRef Name="Equipement_NumSerie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_equipement_panne1">
+          <End Role="panne" Type="Self.panne" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="panneequipement" Type="Self.panneequipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="panne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="panneequipement">
+              <PropertyRef Name="Panne_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_hdd_hdd1">
+          <End Role="hdd" Type="Self.hdd" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pannehdd" Type="Self.pannehdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hdd">
+              <PropertyRef Name="NumSerie" />
+            </Principal>
+            <Dependent Role="pannehdd">
+              <PropertyRef Name="Hdd_NumSerie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_hdd_panne1">
+          <End Role="panne" Type="Self.panne" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pannehdd" Type="Self.pannehdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="panne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="pannehdd">
+              <PropertyRef Name="Panne_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="panne_ibfk_1">
+          <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="panne" Type="Self.panne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="panne">
+              <PropertyRef Name="Id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gestionparcdbModelStoreContainer">
+          <EntitySet Name="atelier" EntityType="Self.atelier" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="backup" EntityType="Self.backup" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="equipement" EntityType="Self.equipement" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="hdd" EntityType="Self.hdd" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="historiquepanneequipement" EntityType="Self.historiquepanneequipement" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="historiquepannehdd" EntityType="Self.historiquepannehdd" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="ligne" EntityType="Self.ligne" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="panne" EntityType="Self.panne" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="panneequipement" EntityType="Self.panneequipement" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="pannehdd" EntityType="Self.pannehdd" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="poste" EntityType="Self.poste" Schema="gestionparcdb" store:Type="Tables" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" Schema="gestionparcdb" store:Type="Tables" />
+          <AssociationSet Name="fk_atelierligne" Association="Self.fk_atelierligne">
+            <End Role="atelier" EntitySet="atelier" />
+            <End Role="ligne" EntitySet="ligne" />
+          </AssociationSet>
+          <AssociationSet Name="fk_equipement_poste1" Association="Self.fk_equipement_poste1">
+            <End Role="poste" EntitySet="poste" />
+            <End Role="equipement" EntitySet="equipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Hdd_Poste1" Association="Self.fk_Hdd_Poste1">
+            <End Role="poste" EntitySet="poste" />
+            <End Role="hdd" EntitySet="hdd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lignepost" Association="Self.fk_lignepost">
+            <End Role="ligne" EntitySet="ligne" />
+            <End Role="poste" EntitySet="poste" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_equipement_equipement1" Association="Self.fk_panne_has_equipement_equipement1">
+            <End Role="equipement" EntitySet="equipement" />
+            <End Role="panneequipement" EntitySet="panneequipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_equipement_panne1" Association="Self.fk_panne_has_equipement_panne1">
+            <End Role="panne" EntitySet="panne" />
+            <End Role="panneequipement" EntitySet="panneequipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_hdd_hdd1" Association="Self.fk_panne_has_hdd_hdd1">
+            <End Role="hdd" EntitySet="hdd" />
+            <End Role="pannehdd" EntitySet="pannehdd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_hdd_panne1" Association="Self.fk_panne_has_hdd_panne1">
+            <End Role="panne" EntitySet="panne" />
+            <End Role="pannehdd" EntitySet="pannehdd" />
+          </AssociationSet>
+          <AssociationSet Name="panne_ibfk_1" Association="Self.panne_ibfk_1">
+            <End Role="utilisateur" EntitySet="utilisateur" />
+            <End Role="panne" EntitySet="panne" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gestionparcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="atelier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Etage" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ligne" Relationship="Self.fk_atelierligne" FromRole="atelier" ToRole="ligne" />
+        </EntityType>
+        <EntityType Name="equipement">
+          <Key>
+            <PropertyRef Name="NumSerie" />
+          </Key>
+          <Property Name="NumSerie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Machine" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Application" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Ip" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="Ram" Type="Int32" />
+          <Property Name="Categorie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Modele" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_achat" Type="DateTime" Nullable="false" />
+          <Property Name="IMMO" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="WinProdKey" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="System" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Etat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dt_sortie" Type="DateTime" Nullable="true" />
+          <Property Name="SSID1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SSID2" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Garantie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="poste_Id" Type="Int32" />
+          <NavigationProperty Name="poste" Relationship="Self.fk_equipement_poste1" FromRole="equipement" ToRole="poste" />
+          <NavigationProperty Name="panneequipement" Relationship="Self.fk_panne_has_equipement_equipement1" FromRole="equipement" ToRole="panneequipement" />
+          <Property Name="Marque" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="hdd">
+          <Key>
+            <PropertyRef Name="NumSerie" />
+          </Key>
+          <Property Name="NumSerie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Categorie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Soft" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Poste_Id" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Etat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dt_achat" Type="DateTime" Nullable="false" />
+          <Property Name="Dt_sortie" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="poste" Relationship="Self.fk_Hdd_Poste1" FromRole="hdd" ToRole="poste" />
+          <NavigationProperty Name="pannehdd" Relationship="Self.fk_panne_has_hdd_hdd1" FromRole="hdd" ToRole="pannehdd" />
+        </EntityType>
+        <EntityType Name="historiquepanneequipement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom_panne" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nom_machine" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatePE" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiquepannehdd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Panne_Nom" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Hdd_NumSerie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatePH" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ligne">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ligne1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdAtelier" Type="Int32" />
+          <NavigationProperty Name="atelier" Relationship="Self.fk_atelierligne" FromRole="ligne" ToRole="atelier" />
+          <NavigationProperty Name="poste" Relationship="Self.fk_lignepost" FromRole="ligne" ToRole="poste" />
+        </EntityType>
+        <EntityType Name="panne">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomPanne" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="panneequipement" Relationship="Self.fk_panne_has_equipement_panne1" FromRole="panne" ToRole="panneequipement" />
+          <NavigationProperty Name="pannehdd" Relationship="Self.fk_panne_has_hdd_panne1" FromRole="panne" ToRole="pannehdd" />
+          <Property Name="Id_utilisateur" Type="Int32" />
+          <NavigationProperty Name="utilisateur" Relationship="gestionparcdbModel.panne_ibfk_1" FromRole="panne" ToRole="utilisateur" />
+        </EntityType>
+        <EntityType Name="panneequipement">
+          <Key>
+            <PropertyRef Name="Panne_Id" />
+            <PropertyRef Name="Equipement_NumSerie" />
+          </Key>
+          <Property Name="Panne_Id" Type="Int32" Nullable="false" />
+          <Property Name="Equipement_NumSerie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatePE" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="equipement" Relationship="Self.fk_panne_has_equipement_equipement1" FromRole="panneequipement" ToRole="equipement" />
+          <NavigationProperty Name="panne" Relationship="Self.fk_panne_has_equipement_panne1" FromRole="panneequipement" ToRole="panne" />
+        </EntityType>
+        <EntityType Name="pannehdd">
+          <Key>
+            <PropertyRef Name="Panne_Id" />
+            <PropertyRef Name="Hdd_NumSerie" />
+          </Key>
+          <Property Name="Panne_Id" Type="Int32" Nullable="false" />
+          <Property Name="Hdd_NumSerie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatePH" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="hdd" Relationship="Self.fk_panne_has_hdd_hdd1" FromRole="pannehdd" ToRole="hdd" />
+          <NavigationProperty Name="panne" Relationship="Self.fk_panne_has_hdd_panne1" FromRole="pannehdd" ToRole="panne" />
+        </EntityType>
+        <EntityType Name="poste">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Poste1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Idligne" Type="Int32" />
+          <NavigationProperty Name="equipement" Relationship="Self.fk_equipement_poste1" FromRole="poste" ToRole="equipement" />
+          <NavigationProperty Name="hdd" Relationship="Self.fk_Hdd_Poste1" FromRole="poste" ToRole="hdd" />
+          <NavigationProperty Name="ligne" Relationship="Self.fk_lignepost" FromRole="poste" ToRole="ligne" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="panne" Relationship="gestionparcdbModel.panne_ibfk_1" FromRole="utilisateur" ToRole="panne" />
+        </EntityType>
+        <Association Name="fk_atelierligne">
+          <End Role="atelier" Type="Self.atelier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ligne" Type="Self.ligne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="atelier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ligne">
+              <PropertyRef Name="IdAtelier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_equipement_poste1">
+          <End Role="poste" Type="Self.poste" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipement" Type="Self.equipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipement">
+              <PropertyRef Name="poste_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_equipement_equipement1">
+          <End Role="equipement" Type="Self.equipement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="panneequipement" Type="Self.panneequipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipement">
+              <PropertyRef Name="NumSerie" />
+            </Principal>
+            <Dependent Role="panneequipement">
+              <PropertyRef Name="Equipement_NumSerie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Hdd_Poste1">
+          <End Role="poste" Type="Self.poste" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdd" Type="Self.hdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="hdd">
+              <PropertyRef Name="Poste_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_hdd_hdd1">
+          <End Role="hdd" Type="Self.hdd" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pannehdd" Type="Self.pannehdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hdd">
+              <PropertyRef Name="NumSerie" />
+            </Principal>
+            <Dependent Role="pannehdd">
+              <PropertyRef Name="Hdd_NumSerie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lignepost">
+          <End Role="ligne" Type="Self.ligne" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="poste" Type="Self.poste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="poste">
+              <PropertyRef Name="Idligne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_equipement_panne1">
+          <End Role="panne" Type="Self.panne" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="panneequipement" Type="Self.panneequipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="panne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="panneequipement">
+              <PropertyRef Name="Panne_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_panne_has_hdd_panne1">
+          <End Role="panne" Type="Self.panne" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pannehdd" Type="Self.pannehdd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="panne">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="pannehdd">
+              <PropertyRef Name="Panne_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionParcContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="atelier" EntityType="Self.atelier" />
+          <EntitySet Name="equipement" EntityType="Self.equipement" />
+          <EntitySet Name="hdd" EntityType="Self.hdd" />
+          <EntitySet Name="historiquepanneequipement" EntityType="Self.historiquepanneequipement" />
+          <EntitySet Name="historiquepannehdd" EntityType="Self.historiquepannehdd" />
+          <EntitySet Name="ligne" EntityType="Self.ligne" />
+          <EntitySet Name="panne" EntityType="Self.panne" />
+          <EntitySet Name="panneequipement" EntityType="Self.panneequipement" />
+          <EntitySet Name="pannehdd" EntityType="Self.pannehdd" />
+          <EntitySet Name="poste" EntityType="Self.poste" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" />
+          <AssociationSet Name="fk_atelierligne" Association="Self.fk_atelierligne">
+            <End Role="atelier" EntitySet="atelier" />
+            <End Role="ligne" EntitySet="ligne" />
+          </AssociationSet>
+          <AssociationSet Name="fk_equipement_poste1" Association="Self.fk_equipement_poste1">
+            <End Role="poste" EntitySet="poste" />
+            <End Role="equipement" EntitySet="equipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_equipement_equipement1" Association="Self.fk_panne_has_equipement_equipement1">
+            <End Role="equipement" EntitySet="equipement" />
+            <End Role="panneequipement" EntitySet="panneequipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Hdd_Poste1" Association="Self.fk_Hdd_Poste1">
+            <End Role="poste" EntitySet="poste" />
+            <End Role="hdd" EntitySet="hdd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_hdd_hdd1" Association="Self.fk_panne_has_hdd_hdd1">
+            <End Role="hdd" EntitySet="hdd" />
+            <End Role="pannehdd" EntitySet="pannehdd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lignepost" Association="Self.fk_lignepost">
+            <End Role="ligne" EntitySet="ligne" />
+            <End Role="poste" EntitySet="poste" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_equipement_panne1" Association="Self.fk_panne_has_equipement_panne1">
+            <End Role="panne" EntitySet="panne" />
+            <End Role="panneequipement" EntitySet="panneequipement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_panne_has_hdd_panne1" Association="Self.fk_panne_has_hdd_panne1">
+            <End Role="panne" EntitySet="panne" />
+            <End Role="pannehdd" EntitySet="pannehdd" />
+          </AssociationSet>
+          <EntitySet Name="backup" EntityType="gestionparcdbModel.backup" />
+          <AssociationSet Name="panne_ibfk_1" Association="gestionparcdbModel.panne_ibfk_1">
+            <End Role="utilisateur" EntitySet="utilisateur" />
+            <End Role="panne" EntitySet="panne" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="backup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumSerie" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Application" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Ip" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Ram" Type="Int32" Nullable="true" />
+          <Property Name="Categorie" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Modele" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Marque" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_achat" Type="DateTime" Nullable="false" />
+          <Property Name="IMMO" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="WinProdKey" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="System" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_sortie" Type="DateTime" Nullable="true" />
+          <Property Name="Etat" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SSID1" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SSID2" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Machine" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Garantie" Type="String" Nullable="true" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Poste" Type="Int32" Nullable="true" />
+        </EntityType>
+        <Association Name="panne_ibfk_1">
+          <End Type="gestionparcdbModel.utilisateur" Role="utilisateur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="gestionparcdbModel.panne" Role="panne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="panne">
+              <PropertyRef Name="Id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="gestionparcdbModelStoreContainer" CdmEntityContainer="GestionParcContext">
+          <EntitySetMapping Name="atelier">
+            <EntityTypeMapping TypeName="gestionparcdbModel.atelier">
+              <MappingFragment StoreEntitySet="atelier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Etage" ColumnName="Etage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipement">
+            <EntityTypeMapping TypeName="gestionparcdbModel.equipement">
+              <MappingFragment StoreEntitySet="equipement">
+                <ScalarProperty Name="Marque" ColumnName="Marque" />
+                <ScalarProperty Name="NumSerie" ColumnName="NumSerie" />
+                <ScalarProperty Name="Machine" ColumnName="Machine" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Ram" ColumnName="Ram" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="Modele" ColumnName="Modele" />
+                <ScalarProperty Name="Dt_achat" ColumnName="Dt_achat" />
+                <ScalarProperty Name="IMMO" ColumnName="IMMO" />
+                <ScalarProperty Name="WinProdKey" ColumnName="WinProdKey" />
+                <ScalarProperty Name="System" ColumnName="System" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Dt_sortie" ColumnName="Dt_sortie" />
+                <ScalarProperty Name="SSID1" ColumnName="SSID1" />
+                <ScalarProperty Name="SSID2" ColumnName="SSID2" />
+                <ScalarProperty Name="Garantie" ColumnName="Garantie" />
+                <ScalarProperty Name="poste_Id" ColumnName="poste_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hdd">
+            <EntityTypeMapping TypeName="gestionparcdbModel.hdd">
+              <MappingFragment StoreEntitySet="hdd">
+                <ScalarProperty Name="NumSerie" ColumnName="NumSerie" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="Soft" ColumnName="Soft" />
+                <ScalarProperty Name="Poste_Id" ColumnName="Poste_Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Dt_achat" ColumnName="Dt_achat" />
+                <ScalarProperty Name="Dt_sortie" ColumnName="Dt_sortie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiquepanneequipement">
+            <EntityTypeMapping TypeName="gestionparcdbModel.historiquepanneequipement">
+              <MappingFragment StoreEntitySet="historiquepanneequipement">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom_panne" ColumnName="Nom_panne" />
+                <ScalarProperty Name="Nom_machine" ColumnName="Nom_machine" />
+                <ScalarProperty Name="DatePE" ColumnName="DatePE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiquepannehdd">
+            <EntityTypeMapping TypeName="gestionparcdbModel.historiquepannehdd">
+              <MappingFragment StoreEntitySet="historiquepannehdd">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Panne_Nom" ColumnName="Panne_Nom" />
+                <ScalarProperty Name="Hdd_NumSerie" ColumnName="Hdd_NumSerie" />
+                <ScalarProperty Name="DatePH" ColumnName="DatePH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ligne">
+            <EntityTypeMapping TypeName="gestionparcdbModel.ligne">
+              <MappingFragment StoreEntitySet="ligne">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ligne1" ColumnName="Ligne" />
+                <ScalarProperty Name="IdAtelier" ColumnName="IdAtelier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="panne">
+            <EntityTypeMapping TypeName="gestionparcdbModel.panne">
+              <MappingFragment StoreEntitySet="panne">
+                <ScalarProperty Name="Id_utilisateur" ColumnName="Id_utilisateur" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NomPanne" ColumnName="NomPanne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="panneequipement">
+            <EntityTypeMapping TypeName="gestionparcdbModel.panneequipement">
+              <MappingFragment StoreEntitySet="panneequipement">
+                <ScalarProperty Name="Panne_Id" ColumnName="Panne_Id" />
+                <ScalarProperty Name="Equipement_NumSerie" ColumnName="Equipement_NumSerie" />
+                <ScalarProperty Name="DatePE" ColumnName="DatePE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pannehdd">
+            <EntityTypeMapping TypeName="gestionparcdbModel.pannehdd">
+              <MappingFragment StoreEntitySet="pannehdd">
+                <ScalarProperty Name="Panne_Id" ColumnName="Panne_Id" />
+                <ScalarProperty Name="Hdd_NumSerie" ColumnName="Hdd_NumSerie" />
+                <ScalarProperty Name="DatePH" ColumnName="DatePH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poste">
+            <EntityTypeMapping TypeName="gestionparcdbModel.poste">
+              <MappingFragment StoreEntitySet="poste">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Poste1" ColumnName="Poste" />
+                <ScalarProperty Name="Idligne" ColumnName="Idligne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="utilisateur">
+            <EntityTypeMapping TypeName="gestionparcdbModel.utilisateur">
+              <MappingFragment StoreEntitySet="utilisateur">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="backup">
+            <EntityTypeMapping TypeName="gestionparcdbModel.backup">
+              <MappingFragment StoreEntitySet="backup">
+                <ScalarProperty Name="Poste" ColumnName="Poste" />
+                <ScalarProperty Name="Garantie" ColumnName="Garantie" />
+                <ScalarProperty Name="Machine" ColumnName="Machine" />
+                <ScalarProperty Name="SSID2" ColumnName="SSID2" />
+                <ScalarProperty Name="SSID1" ColumnName="SSID1" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Dt_sortie" ColumnName="Dt_sortie" />
+                <ScalarProperty Name="System" ColumnName="System" />
+                <ScalarProperty Name="WinProdKey" ColumnName="WinProdKey" />
+                <ScalarProperty Name="IMMO" ColumnName="IMMO" />
+                <ScalarProperty Name="Dt_achat" ColumnName="Dt_achat" />
+                <ScalarProperty Name="Marque" ColumnName="Marque" />
+                <ScalarProperty Name="Modele" ColumnName="Modele" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="Ram" ColumnName="Ram" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NumSerie" ColumnName="NumSerie" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

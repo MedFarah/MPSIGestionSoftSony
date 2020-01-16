@@ -1,0 +1,125 @@
+﻿@model MPSIGestionSoftSony.Models.utilisateur
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://fonts.googleapis.com/css?family=Caveat+Brush" rel="stylesheet">
+
+<h2 class="align-center" style="font-family: 'Caveat Brush', cursive;">Modifier utilisateur</h2>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+
+<div class="container card">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="input-group"></div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group"></div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        <div class="input-group ">
+
+                            <span class="input-group-addon">
+                                <i class="material-icons">vpn_key</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="password" class="form-control " name="Password" id="confirmpass" pattern="^\S{6,}$"
+                                       onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b class="control-label col-md-2">Confirm Password</b>
+                    <div class="col-md-4">
+                        <div class="input-group ">
+
+                            <span class="input-group-addon">
+                                <i class="material-icons">vpn_key</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="password" class="form-control " name="Password" id="password_two" pattern="^\S{6,}$"
+                                       onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" required>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="input-group"></div>
+                <div class="">
+                    @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2 " })
+                    <div class="col-md-6">
+                        <div class="form-line">
+                            <div class="">
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <select class="form-control show-tick" name="Role" id="Role" required @( @Session["role_id"].ToString() != "Admin" ? "readonly='readonly'" : "" )>
+                                            <option value="">-- Please select --</option>
+                                            <option value="Admin" @( ViewBag.Role == "Admin" ? "selected='selected'" : "")>Adminstrateur</option>
+                                            <option value="Technicien" @( ViewBag.Role == "Technicien" ? "selected='selected'" : "")>Technicien</option>
+                                            <option value="Gestionnaire" @( ViewBag.Role == "Gestionnaire" ? "selected='selected'" : "")>Gestionnaire</option>
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group"></div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 align-center ">
+                        <input type="submit" value="Update" class="btn btn-success" />
+                    </div>
+                </div><div class="input-group"></div>
+            </div>
+        </div>
+
+    }
+
+    
+</div><div class="input-group"></div><div class="input-group"></div><div class="input-group"></div>
+<div>
+    <a class="btn bg-pink waves-effect m-b-15" href="@Url.Action("Index", "Utilisateurs")">Back to list</a>
+</div>
+@section Scripts {
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
+}

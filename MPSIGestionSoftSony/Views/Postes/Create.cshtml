@@ -1,0 +1,71 @@
+﻿@model MPSIGestionSoftSony.Models.poste
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Ajouter Poste</h2>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+
+<div class="card container" style="width:500px">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="form-group">
+                    <div class="input-group"></div>
+                    <div class="input-group"></div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-5"> Nom Poste</label>
+                        <div class="col-md-7">
+                            <div class="form-line">
+
+                                @Html.EditorFor(model => model.Poste1, new { htmlAttributes = new { @class = "form-control", required = "true", placeholder = "Poste..." } })
+                                @Html.ValidationMessageFor(model => model.Poste1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group"></div>
+                    <div class="input-group"></div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-5">Ligne</label>
+                        <div class="col-md-7 ">
+                            <div class=" ">
+                                @Html.DropDownList("Idligne", null, "Select Ligne", htmlAttributes: new { @class = "btn btn-default waves-effect ", required = "true" })
+                                @Html.ValidationMessageFor(model => model.Idligne, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group"></div>
+                    <div class="input-group"></div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10 align-center">
+                            <input type="submit" value="Create" class="btn btn-success" />
+                        </div>
+                    </div>
+                    <div class="input-group"></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div>
+    <a class="btn bg-pink waves-effect m-b-15" href="@Url.Action("Index", "Postes")">Back to list</a>
+</div>
+@section Scripts {
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
+}

@@ -1,0 +1,374 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.equipement>
+
+@{
+    ViewBag.Title = "EquipementsByAtelier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@if (TempData["Equipementdestroyed"] != null)
+{
+    <script>
+        swal({
+            text: "This is the third time in a week!",
+            icon: "warning",
+            dangerMode: true,
+        })
+            .then(() => {
+                swal(`Equipement: @TempData["EquipementNumSerie"].ToString() is now hors service`);
+            });
+
+
+    </script>
+
+}
+
+@if (TempData["name"] != null)
+{
+    <script>
+        swal("Good job!", "Equipement modifier!", "success");
+    </script>
+
+}
+<h2 class="align-center" style="font-family: 'Playball', cursive;">@ViewBag.Nom </h2>
+
+@*<a type="button" class="btn btn-primary" href="@Url.Action("AddEquipement","Equipements",new { url = Request.Url.AbsoluteUri })"><i class="fa fa-plus"></i> Add New Equipement</a><br /><br />*@
+
+
+
+<div class="container card">
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+                <thead>
+                    <tr >
+
+
+                        <th @( ViewBag.Active != "uc" ? "style = display:none" : "")>
+                            Nom Machine
+                        </th>
+                        <th @( ViewBag.Active == "uc"  ? "style = display:none" : "")>
+                            Marque
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "point dacces" ? "style = display:none" : "")>
+                            NumSerie
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Description
+                        </th>
+                        <th @( ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Application Sony
+                        </th>
+                        <th @( ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Ip
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Ram
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" ? "style = display:none" : "")>
+                            Modele
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Dt_achat
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" ? "style = display:none" : "")>
+                            IMMO
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            WinProdKey
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            System
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            SSID1
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            SSID2
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Garantie
+                        </th>
+                        <th>
+                            Etat
+                        </th>
+                        <th @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                            Dt_sortie
+                        </th>
+                        <th>
+                            Emplacement
+                        </th>
+                        <th>
+
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                       
+                            <tr @(item.Etat=="En panne" ? "style=color:orangered": "")>
+                                
+                                <td @( ViewBag.Active != "uc" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Machine)
+                                </td>
+                                <td @( ViewBag.Active == "uc" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Marque)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "point dacces"  ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.NumSerie)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                    
+                                <td @( ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Application)
+                                </td>
+                                <td @( ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Ip)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Ram)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Modele)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Dt_achat)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.IMMO)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.WinProdKey)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.System)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" ||  ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.SSID1)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.SSID2)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Garantie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Etat)
+                                </td>
+                                <td @( ViewBag.Active == "uc" || ViewBag.Active == "tv" || ViewBag.Active == "ecran" || ViewBag.Active == "switch" || ViewBag.Active == "imprimante" || ViewBag.Active == "douchette" || ViewBag.Active == "point dacces" || ViewBag.Active == "telephone" ? "style = display:none" : "")>
+                                    @Html.DisplayFor(modelItem => item.Dt_sortie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.poste.Poste1)
+                                </td>
+                                <td>
+                                    @{ if (@Session["role_id"].ToString() == "Admin" || @Session["role_id"].ToString() == "Technicien")
+                                        {
+
+                                            @*href='@Url.Action("Edit","Equipements",new {id= item.NumSerie, url = Request.Url.AbsoluteUri })'*@
+                                            <a class='btn' href='@Url.Action("Edit", "Equipements", new { id = item.NumSerie, url = Request.Url.AbsoluteUri })'> <i class='material-icons'>create</i></a>
+                                             var id = Json.Encode(item.NumSerie);
+                                                if (@Session["role_id"].ToString() == "Admin")
+                                                { <a class='btn' onclick='Delete(@id)' @*href='@Url.Action("Delete","Equipements",new {id= item.NumSerie, url = Request.Url.AbsoluteUri})'*@><i class='material-icons'>delete</i></a>
+                                                }
+                                            
+                                        }
+                                    }
+                                </td>
+                            </tr>           
+
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" style="background-color:#007dbe" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">&times;</span></button>*@
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Add Equipement</h4>
+            </div>
+            <div class="modal-body" id="Modalbody">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+
+
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+            // loadData();
+
+            $('#table').DataTable({
+                //"serverSide": true,
+                //"data": data,
+                
+                dom: "Bfrtip",
+                "language": {
+                    "emptyTable": "No Equipement avaible",
+                    "infoEmpty": "Vide",
+                    "zeroRecords": "Not found",
+                    "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                    "search": "Recherche:",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Suivant",
+                        "previous": "Précident"
+                    },
+                },
+                //"scrollY": 500,
+                //"scrollX": true,
+
+                "buttons": [
+                    { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                    { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                    { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                    { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                ]
+
+            });
+
+
+
+        });
+        function Delete(id) {
+            //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Equipement!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Equipements/Delete/" + id
+
+                        });
+                        swal("Poof! Your Equipement has been deleted!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                        //location.reload();
+                    } else {
+                        swal("Equipement is safe!");
+                    }
+                });
+        }
+
+
+        //edit
+        //function Add() {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/Equipements/Create/",
+        //        success: function (response) {
+        //            $("#Modalbody").html(response);
+
+        //            $("#myModal").modal('show');
+        //        }
+        //    });
+        //}
+
+        function ValidateIPaddress(inputText) {
+            var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (inputText.value.match(ipformat) || inputText.value.match('DHCP')) {
+                //document.form1.Ip.focus();
+                return true;
+            }
+            else {
+                alert("You have entered an invalid IP address!");
+                // document.form1.Ip.focus();
+                $('#Ip').val("");
+
+
+                return false;
+
+            }
+        }
+
+        function ValidateDate() {
+            var dateAchat = $('#Dt_achat').val();
+            var dateSortie = $('#Dt_sortie').val();
+            if ((new Date(dateSortie).getTime() - new Date(dateAchat).getTime()) < 0) {
+                alert('Date Sortie doit etre supperieur a date achat');
+                $('#Dt_achat').val("");
+                $('#Dt_sortie').val("");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function Update() {
+            $.ajax({
+                type: "POST",
+                url: "/Equipements/Create",
+                dataType: 'json',
+                success: function (response) {
+                    console.log('response received.');
+
+
+                },
+                error: function (response) {
+                    console.log(response);
+                    $('validationSummary').hide();
+                }
+            });
+        }
+        $('#btnAdd').click(function (e) {
+            alert('submit');
+            e.preventDefault();
+            var form = $('form'); // change selector your form
+            if (!form.attr('validated')) {
+                if (form.valid()) {
+                    $.ajax({
+                        type: "POST",
+                        data: form.serialize(),
+                        url: "/Equipements/Create",
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log('response received.');
+
+
+                        },
+                        error: function (response) {
+                            console.log(response);
+                            $('validationSummary').hide();
+                        }
+                    });
+                }
+
+            }
+        });
+    </script>
+}

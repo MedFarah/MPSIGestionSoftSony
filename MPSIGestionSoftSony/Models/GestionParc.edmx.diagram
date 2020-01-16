@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8b4b69f684ef4562871cf69bb5afbf28" Name="Diagram1">
+        <EntityTypeShape EntityType="gestionparcdbModel.atelier" Width="1.5" PointX="1.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.equipement" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.hdd" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.historiquepanneequipement" Width="1.5" PointX="14.875" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.historiquepannehdd" Width="1.5" PointX="17.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.ligne" Width="1.5" PointX="3.125" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.panne" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.panneequipement" Width="1.5" PointX="9.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.pannehdd" Width="1.5" PointX="9.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.poste" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gestionparcdbModel.utilisateur" Width="1.5" PointX="11.375" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="gestionparcdbModel.fk_atelierligne" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_equipement_poste1" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_panne_has_equipement_equipement1" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_Hdd_Poste1" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_panne_has_hdd_hdd1" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_lignepost" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_panne_has_equipement_panne1" ManuallyRouted="false" />
+        <AssociationConnector Association="gestionparcdbModel.fk_panne_has_hdd_panne1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="gestionparcdbModel.backup" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="gestionparcdbModel.panne_ibfk_1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

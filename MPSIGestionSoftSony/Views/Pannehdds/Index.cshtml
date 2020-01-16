@@ -1,0 +1,147 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.pannehdd>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+
+@if (TempData["created"] != null)
+{
+    <script>
+        swal("", "Panne HDD created!", "success");
+    </script>
+
+}
+
+@if (TempData["updated"] != null)
+{
+    <script>
+        swal("", "Panne HDD updated!", "success");
+    </script>
+
+}
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Panne Hdd</h2>
+
+<a href="@Url.Action("Create","Pannehdds")" class="btn bg-blue waves-effect m-b-15"><i class="fa fa-plus"></i> Add New Panne HDD</a>
+
+<div class="container card">
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+                <thead>
+                    <tr>
+                        <th>Hdd Num Serie</th>
+                        <th>Nom Panne</th>
+                        <th>Date Panne</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.hdd.NumSerie)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.panne.NomPanne)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatePH)
+                            </td>
+                            <td>
+                                <a class='btn' href='@Url.Action("Edit","Pannehdds", new { idH = item.Hdd_NumSerie, idP = item.Panne_Id })'><i class='material-icons'>create</i></a>
+                                @{ var idH = Json.Encode(item.Hdd_NumSerie);
+                                    var idP = Json.Encode(item.Panne_Id);}
+                                <a class='btn' onclick='Delete(@idH,@idP)'><i class='material-icons'>settings_backup_restore</i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Hdd Num Serie</th>
+                        <th>Nom Panne</th>
+                        <th>Date Panne</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#table').DataTable({
+                //"serverSide": true,
+                //"data": data,
+
+                dom: "Bfrtip",
+                "language": {
+                    "emptyTable": "Pas de panne HDD disponible",
+                    "infoEmpty": "Vide",
+                    "zeroRecords": "Not found",
+                    "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                    "search": "Recherche:",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Suivant",
+                        "previous": "Précident"
+                    },
+                },
+                "buttons": [
+                    { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                    { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                    { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                    { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                ]
+
+            });
+
+
+
+        });
+        function Delete(idH, idP) {
+            //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+            swal({
+                title: "Are you sure?",
+                text: "Once repaired,  this HDD will work again!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Pannehdds/Delete?idH=" + idH + "&idP=" + idP
+
+                        });
+                        swal("Poof! HDD work again!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                        //location.reload();
+                    } else {
+                        swal("HDD  is still not working!");
+                    }
+                });
+        }
+    </script>
+}

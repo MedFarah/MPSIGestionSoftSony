@@ -1,0 +1,1199 @@
+﻿@using MPSIGestionSoftSony.Utilities
+
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+<meta name="referrer" content="origin">
+
+
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+<title>MPSI</title>
+
+<!-- Favicon-->
+
+<link rel="icon" src="~/template/images/Mpsi1.gif" type="image/x-icon">
+
+<!-- Google Fonts -->
+
+<link href="~/template/css/googleFonts.css" rel="stylesheet" />
+
+<link href="~/template/css/Materiel icon.css" rel="stylesheet" />
+
+<!-- Bootstrap Core Css -->
+
+<link href="~/template/css/bootstrap.css" rel="stylesheet" />
+
+<!-- Waves Effect Css -->
+
+<link href="~/template/css/waves.css" rel="stylesheet" />
+
+<!-- Animation Css -->
+
+<link href="~/template/css/animate.css" rel="stylesheet" />
+
+<!-- Morris Chart Css-->
+
+<link href="~/template/css/morris.css" rel="stylesheet" />
+
+<!-- Custom Css -->
+
+<link href="~/template/css/style.css" rel="stylesheet" />
+
+<!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+
+<link href="~/template/css/all-themes.css" rel="stylesheet" />
+
+<link href="~/template/css/indigo-pink.css" rel="stylesheet" />
+
+<link href="~/template/css/datatable.min.css" rel="stylesheet" />
+
+<link href="~/template/css/PatuaOne.css" rel="stylesheet" />
+
+<link href="~/template/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+<!--Sweet Alert-->
+
+<script src="~/template/js/SweetAlert.js"></script>
+
+<link href="~/template/css/PlayBall.css" rel="stylesheet" />
+    //icons
+    @*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />*@
+    <link href="~/template/css/font awsome.css" rel="stylesheet" />
+    <link href="~/template/iconfont/material-icons.css" rel="stylesheet" />
+    <style>
+        .navbar-center {
+            position: absolute;
+            width: 100%;
+            left: 100px;
+            top: 25px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body class="theme-red">
+    <!-- Page Loader -->
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header ">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand " href="@Url.Action("Index", "Home")"><em class="navbar-center">Maintenance Partner Solution International  - SOFT SONY</em></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    @*<!-- Call Search -->
+                        <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                        <!-- #END# Call Search -->
+                        <!-- Notifications -->*@
+                    <li><a href="@Url.Content("/Home/LogOff")">Déconnexion</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="image">
+                    <img src="~/template/images/avatar5.png" width="48" height="48" alt="User" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @User.Identity.Name</div>
+                    @*<div class="email">
+                            <a href="@Url.Content("/Home/LogOff")" style="color:orangered;font-size:medium">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>*@
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href='@Url.Action("Edit", "Utilisateurs")/@Session["Id"]' ><i class="material-icons">person</i>Profile</a></li>
+                            @*<li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+                                <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+                                <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>*@
+                            @*<li role="separator" class="divider"></li>*@
+                            <li><a href="@Url.Content("/Home/LogOff")"><i class="material-icons">input</i>Déconnexion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+
+                <ul class="list">
+                    <li class="header">MAIN NAVIGATION</li>
+                    <li class='@Html.IsActive("Home", "Index")'>
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="material-icons">home</i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien" || Session["role_id"].ToString() == "Gestionnaire")
+                        {
+                            <li class='@Html.IsActive("Equipements", "Equipements") || @Html.IsActive("HistoriquePanneEquipements", "Index") || @Html.IsActive("PanneEquipements", "Index") || @Html.IsActive("PanneEquipements", "Index") || @Html.IsActive("Equipements", "AddEquipement") || @Html.IsActive("Equipements", "AffichageParCategorieAndEtageAndLigne") || @Html.IsActive("Equipements", "AffichageParCategorieAndEtage") || @Html.IsActive("Equipements", "AffichageParEtat") || @Html.IsActive("Equipements", "AffichageParCategorie")'>
+                                <a href="#" class="menu-toggle">
+                                    <i class="material-icons">widgets</i>
+                                    <span>Equipement</span>
+                                </a>
+
+
+                                <ul class="ml-menu">
+                                    @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien")
+                                        {
+                                            <li class='@Html.IsActive("Equipements", "AddEquipement")'>
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <i class="material-icons">add</i>
+                                                    <span>Ajout Equipement</span>
+                                                </a>
+
+                                                <ul class="ml-menu">
+                                                    <li class="@( ViewBag.cat == "uc" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "uc" })" style="font-family: 'Patua One', cursive;">UC</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "tv" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "tv" })" style="font-family: 'Patua One', cursive;">TV</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "ecran" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "ecran" })" style="font-family: 'Patua One', cursive;">Ecran</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "switch" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "switch" })" style="font-family: 'Patua One', cursive;">Switch</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "imprimante" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "imprimante" })" style="font-family: 'Patua One', cursive;">Imprimante</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "douchette" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "douchette" })" style="font-family: 'Patua One', cursive;">Douchette</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "point dacces" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "point dacces" })" style="font-family: 'Patua One', cursive;">Point d'accès</a>
+                                                    </li>
+                                                    <li class="@( ViewBag.cat == "telephone" ? "active" : "")">
+                                                        <a href="@Url.Action("AddEquipement", "Equipements", new { Categorie = "telephone" })" style="font-family: 'Patua One', cursive;">Appareil téléphonique</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+                                        }
+                                    }
+                                    <li class='@Html.IsActive("Equipements", "AffichageParCategorieAndEtageAndLigne") || @Html.IsActive("Equipements", "Equipements") || @Html.IsActive("Equipements", "AffichageParCategorieAndEtage") || @Html.IsActive("Equipements", "AffichageParEtat") || @Html.IsActive("Equipements", "AffichageParCategorie")'>
+                                        <a href="javascript:void(0);" class="menu-toggle">
+                                            <i class="material-icons">assignment</i>
+                                            <span>Consultation</span>
+                                        </a>
+                                        <ul class="ml-menu">
+                                            <li class="@(ViewBag.Active == "uc" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">U.C</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "ucSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ucServeur" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "uc", Ligne = "Serveur" })">Serveur</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "uc", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ucBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ucAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "uc", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ucMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ucLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "uc", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ucAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ucps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "uc", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "uc", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucpsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "uc", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "uc", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ucHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "uc" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ucHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "uc" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "uc" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "uc" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+                                            <li class="@(ViewBag.Active == "tv" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">TV</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "tvSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.current == "tvStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "tv", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "tvBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.current == "tvAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "tv", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "tvMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "tvLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "tv", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "tvAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.current == "tvps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "tv", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "tv", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvpsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "tv", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "tv", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.current == "tvHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "tv" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.current == "tvHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "tv" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "tv" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "tv" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+                                            <li class="@(ViewBag.Active == "ecran" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Ecran</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "ecranSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "ecranStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "ecran", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ecranBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ecranAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "ecran", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ecranMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ecranLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "ecran", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "ecranAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ecranps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "ecran", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "ecran", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranpsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "ecran", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "ecran", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "ecranHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "ecran" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "ecranHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "ecran" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "ecran" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "ecran" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+
+
+
+                                            <li class="@(ViewBag.Active == "switch" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Switch</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "switchSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "switchStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "switch", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "switchBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "switchAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "switch", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "switchMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "switchLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "switch", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "switchAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "switchps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "switch", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "switch", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchpsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "switch", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "switch", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "switchHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "switch" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "switchHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "switch" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "switch" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "switch" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+
+                                            <li class="@(ViewBag.Active == "imprimante" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Imprimante</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "imprimanteSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "imprimanteStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "imprimante", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "imprimanteBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "imprimanteAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "imprimante", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "imprimanteMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "imprimanteLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "imprimante", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+
+                                                    <li class="@(ViewBag.Etage == "imprimanteAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "imprimanteps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "imprimante", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "imprimante", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimantepsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "imprimante", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "imprimante", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "imprimanteHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "imprimante" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "imprimanteHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "imprimante" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "imprimante" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "imprimante" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+
+
+                                            <li class="@(ViewBag.Active == "douchette" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Douchette</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "douchetteSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "douchetteStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "douchette", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "douchetteBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "douchetteAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "douchette", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "douchetteMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "douchetteLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "douchette", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "douchetteAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "douchetteps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "douchette", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "douchette", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchettepsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "douchette", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "douchette", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "douchetteHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "douchette" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "douchetteHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "douchette" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "douchette" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "douchette" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+
+
+                                            <li class="@(ViewBag.Active == "point dacces" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Point d' accès</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "point daccesSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "point daccesStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "point dacces", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "point daccesBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "point daccesAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "point dacces", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "point daccesMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "point daccesLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "point dacces", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "point daccesAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "point daccesps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "point dacces", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "point dacces", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccespsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "point dacces", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "point dacces", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "point daccesHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "point dacces" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "point daccesHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "point dacces" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "point dacces" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "point dacces" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+
+                                            <li class="@(ViewBag.Active == "telephone" ? "active" : "") ">
+                                                <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Patua One', cursive;">Appareil téléphonique</a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Etage == "telephoneSalle Machine" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle" style="font-family: 'Bangers', cursive;">Salle Machine</a>
+                                                        <ul class="ml-menu">
+
+                                                            <li class="@(ViewBag.Current == "telephoneStock" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Salle Machine", categorie = "telephone", Ligne = "Stock" })">Stock</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "telephoneBureau" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Bureau</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "telephoneAdministration" ? "active" : "") ">
+                                                                <a class="" href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Administration" })">Administration</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneResponsable" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Responsable" })">Responsable</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneIT" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "IT" })">IT</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneRD" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "RD" })">RD</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneRH" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "RH" })">RH</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneAchat" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Achat" })">Achat</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneST" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "ST" })">ST</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneQualite" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Qualite" })">Qualité</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneOutillage" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Bureau", categorie = "telephone", Ligne = "Outillage" })">Outillage</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "telephoneMagasin" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Magasin</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "telephoneLogistique" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Magasin", categorie = "telephone", Ligne = "Logistique" })">Logistique</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.Etage == "telephoneAtelier" ? "active" : "") ">
+                                                        <a href="javascript:void(0);" class="menu-toggle">Atelier</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "telephoneps4/ps3" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "telephone", Ligne = "ps4/ps3" })">PS4/PS3</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneTRDX" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "telephone", Ligne = "TRDX" })">TRDX</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephonepsvita" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "telephone", Ligne = "psvita" })">PsVita</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneMCB" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParCategorieAndEtageAndLigne", "Equipements", new { Etage = "Atelier", categorie = "telephone", Ligne = "MCB" })">MCB</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li class='@Html.IsActive("Equipements", "AffichageParEtat")'>
+                                                        <a href="javascript:void(0);" class="menu-toggle">Autre</a>
+                                                        <ul class="ml-menu">
+                                                            <li class="@(ViewBag.Current == "telephoneHS" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HS", categorie = "telephone" })">H.S</a>
+                                                            </li>
+                                                            <li class="@(ViewBag.Current == "telephoneHMPSI" ? "active" : "") ">
+                                                                <a href="@Url.Action("AffichageParEtat", "Equipements", new { Etat = "HMPSI", categorie = "telephone" })">H.M.P.S.I</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="@(ViewBag.ActiveE == "telephone" ? "active" : "") ">
+                                                        <a href="@Url.Action("AffichageParCategorie", "Equipements", new { categorie = "telephone" })">All</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+
+
+                                            <li class="@Html.IsActive("Equipements", "Equipements") ">
+                                                <a href="@Url.Action("Equipements", "Equipements")" style="font-family: 'Patua One', cursive;">All</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien")
+                                        {
+                                            <li class='@Html.IsActive("PanneEquipements", "Index")'>
+                                                <a href="@Url.Action("Index", "PanneEquipements")">
+                                                    <i class="material-icons">build</i>
+                                                    <span>Pannes Equipements</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        }
+                                            @{ if (Session["role_id"].ToString() == "Admin")
+                                                {
+
+                                                    <li class='@Html.IsActive("HistoriquePanneEquipements", "Index")'>
+                                                        <a href="@Url.Action("Index", "HistoriquePanneEquipements")">
+                                                            <i class="material-icons">history</i>
+                                                            <span>Historique Panne </span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+
+
+                            </li>
+                                                }
+                                        }
+                            @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien" || Session["role_id"].ToString() == "Gestionnaire")
+                                {
+                                    <li class='@Html.IsActive("HistoriquePannehdds", "Index") || @Html.IsActive("Hdds", "Create") || @Html.IsActive("Hdds", "Index") || @Html.IsActive("Hdds", "Emplacement") || @Html.IsActive("Hdds", "EmplacementParEtat") || @Html.IsActive("Pannehdds", "Index")'>
+                                        <a href="#" class="menu-toggle">
+                                            <i class="material-icons">layers</i>
+                                            <span>Support HDD</span>
+                                        </a>
+                                        <ul class="ml-menu">
+                                            @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien")
+                                                {
+                                                    <li class='@Html.IsActive("Hdds", "Create")'>
+                                                        <a href="@Url.Action("Create", "Hdds")">
+                                                            <i class="material-icons">add</i>
+                                                            <span>Ajout HDD</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                }
+                                            <li class='@Html.IsActive("Hdds", "Emplacement") || @Html.IsActive("Hdds", "EmplacementParEtat")'>
+                                                <a href="#" class="menu-toggle">
+                                                    <i class="material-icons">assignment</i>
+
+                                                    <span> Consultation</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li class="@(ViewBag.Active == "ps4/ps3" ? "active " : "") ">
+                                                        <a href="@Url.Action("Emplacement", "Hdds", new { Ligne = "ps4/ps3" })" style="font-family: 'Patua One', cursive;">PS4</a>
+                                                    </li>
+                                                    <li class="@(ViewBag.Active == "MCB" ? "active" : "") ">
+                                                        <a href="@Url.Action("Emplacement", "Hdds", new { Ligne = "MCB" })" style="font-family: 'Patua One', cursive;">MCB</a>
+                                                    </li>
+                                                    <li class="@(ViewBag.Active == "Stock" ? "active" : "") ">
+                                                        <a href="@Url.Action("Emplacement", "Hdds", new { Ligne = "Stock" })" style="font-family: 'Patua One', cursive;">STOCK</a>
+                                                    </li>
+                                                    <li class="@Html.IsActive("Hdds", "EmplacementParEtat")">
+                                                        <a href="@Url.Action("EmplacementParEtat", "Hdds")" style="font-family: 'Patua One', cursive;">H.S</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien")
+                                                {
+                                                    <li class='@Html.IsActive("Pannehdds", "Index")'>
+                                                        <a href="@Url.Action("Index", "Pannehdds")">
+                                                            <i class="material-icons">build</i>
+                                                            <span>Pannes HDDs</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                            @{ if (Session["role_id"].ToString() == "Admin")
+                                                {
+                                                    <li class='@Html.IsActive("HistoriquePannehdds", "Index")'>
+                                                        <a href="@Url.Action("Index", "HistoriquePannehdds")">
+                                                            <i class="material-icons">history</i>
+                                                            <span>Historique Pannes</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+
+                                }
+                            }
+
+
+                            <li class='@Html.IsActive("Postes", "Index") @Html.IsActive("Lignes", "Index") @Html.IsActive("Ateliers", "Index") @Html.IsActive("Pannes", "Index")'>
+                                <a href="#" class="menu-toggle">
+                                    <i class="material-icons">widgets</i>
+                                    <span>Administration</span>
+                                </a>
+
+
+                                <ul class="ml-menu">
+                                    <li class='@Html.IsActive("Postes", "Index")'>
+                                        <a href="@Url.Action("Index", "Postes")">Postes</a>
+                                    </li>
+                                    @{ if (Session["role_id"].ToString() == "Admin" || Session["role_id"].ToString() == "Technicien")
+                                        {
+                                            <li class='@Html.IsActive("Pannes", "Index")'>
+                                                <a href="@Url.Action("Index", "Pannes")">Pannes</a>
+                                            </li>
+                                        } }
+                                    <li class='@Html.IsActive("Lignes","Index")'>
+                                        <a href="@Url.Action("Index","Lignes")">Lignes</a>
+                                    </li>
+                                    <li class='@Html.IsActive("Ateliers","Index")'>
+                                        <a href="@Url.Action("Index","Ateliers")">Ateliers</a>
+                                    </li>
+
+                                </ul>
+
+
+                            </li>
+
+                            @* back up *@
+                            @{ if (Session["role_id"].ToString() == "Admin")
+                                {
+                                    <li class='@Html.IsActive("backups","Index")'>
+                                        <a href="@Url.Action("Index","backups")">
+                                            <i class="material-icons">security</i>
+                                            <span>BackUP</span>
+                                        </a>
+                                    </li>
+
+
+
+                                    <li class='@Html.IsActive("Utilisateurs","Index")'>
+                                        <a href="@Url.Action("Index","Utilisateurs")">
+                                            <i class="material-icons">perm_media</i>
+                                            <span>Utilisateurs</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                <div class="slimScrollBar"></div>
+            </div>
+
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    @DateTime.Now.Year<a href="javascript:void(0);"> MPSI </a>.
+                </div>
+
+            </div>
+            <!-- #Footer -->
+        </aside>
+    </section>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header"></section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            @RenderBody()
+        </section>
+
+    </div>
+    <!-- /.row (main row) -->
+    <!-- /.content -->
+    <!-- Jquery Core Js -->
+    <script src="~/template/js/jquery.1.10.2.min.js"></script>
+    <script src="~/template/js/jquery-ui.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="~/template/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="~/template/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="~/template/js/jquery.slimscroll.js"></script>
+    <script src="~/template/js/waitMe.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="~/template/js/waves.js"></script>
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="~/template/js/jquery.countTo.js"></script>
+    <!-- Morris Plugin Js -->
+    <script src="~/template/js/raphael.min.js"></script>
+    <script src="~/template/js/morris.js"></script>
+
+    <!-- ChartJs -->
+    <script src="~/template/js/Chart.bundle.js"></script>
+
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    @RenderSection("scripts", required: false)
+
+
+    <!-- Flot Charts Plugin Js -->
+    <script src="~/template/js/jquery.flot.js"></script>
+    <script src="~/template/js/jquery.flot.resize.js"></script>
+    <script src="~/template/js/jquery.flot.pie.js"></script>
+    <script src="~/template/js/jquery.flot.categories.js"></script>
+    <script src="~/template/js/jquery.flot.time.js"></script>
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="~/template/js/jquery.sparkline.js"></script>
+
+    <!-- Custom Js -->
+    <script src="~/template/js/admin.js"></script>
+
+
+    <script src="~/template/js/material.js"></script>
+
+</body>
+</html>

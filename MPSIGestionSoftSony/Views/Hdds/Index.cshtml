@@ -1,0 +1,292 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.hdd>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">@ViewBag.HDD</h2>
+@if (TempData["name"] != null)
+{
+    <script>
+        swal("Good job!", "HDD modifier!", "success");
+    </script>
+
+}
+
+@if (TempData["HDDdestroyed"] != null)
+{
+    <script>
+        swal({
+            text: "This is the third time in a week!",
+            icon: "warning",
+            dangerMode: true,
+        })
+            .then(() => {
+                swal(`HDD: @TempData["HDDNumSerie"].ToString() is now hors service`);
+            });
+
+
+        @*swal("Good job!", "HDD @TempData["HDDNumSerie"].ToString() has been Destroyed @TempData["HDDdestroyed"].ToString() !", "warning");*@
+    </script>
+
+}
+@*<a href="@Url.Action("Create","Hdds")" class="btn bg-blue waves-effect m-b-15"><i class="fa fa-plus"></i> Add New HDD</a>*@
+
+<div class="container card">
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumSerie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categorie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Soft)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Etat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dt_achat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dt_sortie)
+                        </th>
+                        <th>
+                            Poste
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        if (item.Etat == "En Panne")
+                        {
+                            <tr style="color:orangered">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumSerie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Categorie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Soft)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Etat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dt_achat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dt_sortie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.poste.Poste1)
+                                </td>
+                                <td>
+                                    <a class='btn' href='@Url.Action("Edit","Hdds",new {id= item.NumSerie})'><i class='material-icons'>create</i></a>
+                                    @{ var id = Json.Encode(item.NumSerie);}
+                                    <a class='btn' onclick="Delete(@id)"><i class='material-icons'>delete</i></a>
+                                </td>
+                            </tr>
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumSerie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Categorie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Soft)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Etat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dt_achat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dt_sortie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.poste.Poste1)
+                                </td>
+                                <td>
+                                    <a class='btn' href='@Url.Action("Edit","Hdds",new {id= item.NumSerie})'><i class='material-icons'>create</i></a>
+                                    @{ var id = Json.Encode(item.NumSerie);}
+                                    <a class='btn' onclick="Delete(@id)"><i class='material-icons'>delete</i></a>
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumSerie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categorie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Soft)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Etat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dt_achat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dt_sortie)
+                        </th>
+
+                        <th>
+                            Poste
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+            // loadData();
+
+                    $('#table').DataTable({
+                        //"serverSide": true,
+                        //"data": data,
+                        "language": {
+                            "emptyTable": "No HDD avaible",
+                            "infoEmpty": "Vide",
+                            "zeroRecords": "Not found",
+                            "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                            "search": "Recherche:",
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "Suivant",
+                                "previous": "Précident"
+                            },
+                        },
+                        dom: "Bfrtip",
+                        //"scrollY": 500,
+                        //"scrollX": true,
+                        //@*"columns": [
+                            { "data": "NumSerie", "name": "NumSerie" },
+                            { "data": "Description", "name": "Description" },
+                            { "data": "Application", "name": "Application" },
+                            { "data": "Ip", "name": "Ip" },
+                            { "data": "Ram", "name": "Ram" },
+                            { "data": "Categorie", "name": "Categorie" },
+                            { "data": "Modele", "name": "Modele" },
+                            {
+                                "data": "Dt_achat", "name": "Dt_achat", "render": function (data) {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
+                                }
+                            },
+                            { "data": "IMMO", "name": "IMMO" },
+                            { "data": "WinProdKey", "name": "WinProdKey" },
+                            { "data": "System", "name": "System" },
+                            {
+                                "data": "Dt_sortie", "name": "Dt_sortie", "render": function (data) {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear();
+                                }
+                            },
+                            { "data": "poste.Poste1", "name": "poste.Poste1" },
+                            {
+                                "data": "NumSerie", "render": function (id) {
+                                    // console.log(NumSerie);
+                                    // String ch = NumSerie;
+                                    return "<a class='btn'  href='@Url.Action("Edit","Equipements")/" + id + "' ><i class='material-icons'>create</i></a><a class='btn '  href='@Url.Action("Delete","Equipements")/" + id + "'><i class='material-icons'>delete</i></a>";
+                                },
+                                "orderable": false,
+                                "width": "75px"
+                            },
+
+                        ],*@
+                        "buttons": [
+                            { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                            { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                            { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                            { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                        ]
+
+                    });
+
+
+
+        });
+
+        function Delete(id) {
+            //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this HDD!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Hdds/Delete/" + id
+
+                        });
+                        swal("Poof! Your HDD has been deleted!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                        //location.reload();
+                    } else {
+                        swal("HDD is safe!");
+                    }
+                });
+        }
+
+    </script>
+}

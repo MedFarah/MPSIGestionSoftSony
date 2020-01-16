@@ -1,0 +1,156 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.ligne>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+
+@if (TempData["created"] != null)
+{
+    <script>
+        swal("Good job!", "Ligne created!", "success");
+    </script>
+
+}
+
+@if (TempData["name"] != null)
+{
+    <script>
+        swal("Good job!", "Ligne modifier!", "success");
+    </script>
+
+}
+@if (TempData["delete"] != null)
+{
+    <script>
+        swal("Good job!", "Ligne deleted!", "success");
+    </script>
+
+}
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Listes des Lignes</h2>
+<div class="input-group"></div>
+<a href="@Url.Action("Create","Lignes")" class="btn bg-blue waves-effect m-b-15"><i class="fa fa-plus"></i> Add New Line</a>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="body table-responsive">
+
+                <table class=" table table-bordered table-striped table-hover dataTable js-exportable " id="table">
+                    <thead>
+                        <tr>
+                            <th>Nom Ligne</th>
+                            <th>Nom Atelier</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ligne1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.atelier.Etage)
+                                </td>
+                                <td>
+                                    <a class='btn' href='@Url.Action("Edit","Lignes",new {id= item.Id})'><i class='material-icons'>create</i></a>
+                                    @{ var id = Json.Encode(item.Id);}
+                                    <a class='btn' onclick='Delete(@id)'><i class='material-icons'>delete</i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Nom Ligne</th>
+                            <th>Nom Atelier</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+            // loadData();
+
+            $('#table').DataTable({
+                //"serverSide": true,
+                //"data": data,
+
+                dom: "Bfrtip",
+                "language": {
+                    "emptyTable": "Pas de ligne disponible",
+                    "infoEmpty": "Vide",
+                    "zeroRecords": "Not found",
+                    "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                    "search": "Recherche:",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Suivant",
+                        "previous": "Précident"
+                    },
+                },
+                //"scrollY": 500,
+                //"scrollX": true,
+
+                "buttons": [
+                    { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                    { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                    { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                    { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                ]
+
+            });
+
+
+
+        });
+        function Delete(id) {
+            //if (confirm('Are You Sure to Delete this Employee Record ?')) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Line!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Lignes/Delete/" + id
+
+                        });
+                        swal("Poof! Line has been deleted!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                        //location.reload();
+                    } else {
+                        swal("Line is safe!");
+                    }
+                });
+        }
+    </script>
+}

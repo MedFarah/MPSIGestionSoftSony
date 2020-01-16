@@ -1,0 +1,451 @@
+﻿@model MPSIGestionSoftSony.Models.equipement
+
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Ajouter Equipement</h2>
+
+<div class="input-group"></div>
+<div class="input-group"></div>
+<div class="input-group"></div>
+@if (TempData["name"] != null)
+{
+    <script>
+        swal("Good job!", "Equipement modifier!", "success");
+    </script>
+
+}
+@if (TempData["success"] != null)
+{
+    <script>
+        swal("Good job!", "Equipement Ajouter!", "success");
+    </script>
+
+}
+@if (ViewBag.existdeja != null)
+{
+    <script>
+        swal("Oops", "Numéro de Serie exist deja!", "error");
+    </script>
+
+}
+@if (TempData["success"] != null)
+{
+    <script>
+        swal("Good job!", "Equipement Ajouter!", "success");
+    </script>
+
+}
+
+<div class="card">
+
+    @using (Html.BeginForm("Create", "Equipements", FormMethod.Post, new { id = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+
+
+                <div class="form-group ">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group" @( ViewBag.cat != "uc" ? "hidden" : "") >
+                        @Html.LabelFor(model => model.Machine, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Machine, new { htmlAttributes = new { @class = "form-control ", placeholder = " Machine", minlength = 3 } })
+                                @Html.ValidationMessageFor(model => model.Machine, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" @( ViewBag.cat == "uc" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.Marque, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Marque, new { htmlAttributes = new { @class = "form-control ", placeholder = " Marque", minlength = 3 } })
+                                @Html.ValidationMessageFor(model => model.Marque, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "point dacces" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.SSID1, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.SSID1, new { htmlAttributes = new { @class = "form-control", placeholder = "SSID1", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.System, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "uc" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.WinProdKey, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.WinProdKey, new { htmlAttributes = new { @class = "form-control", placeholder = "Win Prod Key", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.WinProdKey, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "uc" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.Application, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Application, new { htmlAttributes = new { @class = "form-control", placeholder = " Application", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.Application, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="">
+                        @Html.LabelFor(model => model.Etat, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class=" ">
+                                <div class="">
+
+                                    <div class="row clearfix">
+                                        <div class="form-line col-sm-6">
+                                            <select class="form-control show-tick" name="Etat" id="Etat" required>
+                                                <option value="">-- Please select --</option>
+                                                <option value="Service">En Serivce</option>
+                                                <option value="HS">H.S</option>
+                                                <option value="HMPSI">H.M.P.S.I</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.Etat, "", new { @class = "text-danger" })
+                                        </div>
+
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "point dacces" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.SSID2, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.SSID2, new { htmlAttributes = new { @class = "form-control", placeholder = "SSID2", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.System, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "uc" && ViewBag.cat != "imprimante" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.Ip, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Ip, new { htmlAttributes = new { @class = "form-control", placeholder = "IP", maxlength = 30, onblur = "ValidateIPaddress(this)" } })
+                                @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="form-group" @( ViewBag.cat != "uc" && ViewBag.cat != "imprimante" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.Modele, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Modele, new { htmlAttributes = new { @class = "form-control", placeholder = "Model", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.Modele, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.NumSerie, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.NumSerie, new { htmlAttributes = new { @class = "form-control ", placeholder = "Numéro Serie", maxlength = 30, required = true } })
+                                <span class="field-validation-error text-danger"
+                                      data-valmsg-for="NumSerie"
+                                      data-valmsg-replace="true" id="NumSerieVal"></span>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IMMO, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.IMMO, new { htmlAttributes = new { @class = "form-control", placeholder = "IMMO", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.IMMO, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+                    <div class="">
+                        <label class="control-label col-md-1 align-center"> Emplacement</label>
+                        <div class="col-md-5 col-lg-5 align-center">
+                            <div class=" ">
+                                <div>
+                                    <div class="row clearfix">
+                                        <div class="form-line col-sm-6">
+
+                                            @Html.DropDownList("poste_Id", null, "Vide", htmlAttributes: new { @class = "form-control show-tick" })
+                                            @Html.ValidationMessageFor(model => model.poste_Id, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" @( ViewBag.cat != "uc" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.Ram, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Ram, new { htmlAttributes = new { @class = "form-control", placeholder = "Ram", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.Ram, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" @( ViewBag.cat != "uc" ? "hidden" : "")>
+                        @Html.LabelFor(model => model.System, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.System, new { htmlAttributes = new { @class = "form-control", placeholder = "System", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.System, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Dt_achat, htmlAttributes: new { @class = "control-label col-md-1 align-center " })
+
+                        <div class="col-md-5">
+                            <div class="input-group ">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">date_range</i>
+                                </span>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Dt_achat, new { htmlAttributes = new { @class = "form-control", required = true, @type = "date" } })
+                                            @Html.ValidationMessageFor(model => model.Dt_achat, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Garantie, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Garantie, new { htmlAttributes = new { @class = "form-control", placeholder = "Garantie", maxlength = 30 } })
+                                @Html.ValidationMessageFor(model => model.System, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.Dt_sortie, htmlAttributes: new { @class = "control-label col-md-1 align-center " })
+
+                        <div class="col-md-5 col-lg-5">
+
+                            <div class="input-group ">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">date_range</i>
+                                </span>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Dt_sortie, new { htmlAttributes = new { @class = "form-control", onblur = "ValidateDate()", @type = "date" } })
+                                            @Html.ValidationMessageFor(model => model.Dt_sortie, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1 " })
+                        <div class="col-md-5 ">
+                            <div class="form-line">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control ", placeholder = " Description", minlength = 3 } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="" style="display:none">
+                        @Html.LabelFor(model => model.Categorie, htmlAttributes: new { @class = "control-label col-md-1 align-center " })
+                        <div class="col-md-5 ">
+                            <div class="">
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <select class="form-control show-tick" name="Categorie" id="Categorie" required>
+                                            <option value="">-- Please select --</option>
+                                            <option value="uc" @( ViewBag.cat == "uc" ? "selected='selected'" : "")>U.C</option>
+                                            <option value="tv" @( ViewBag.cat == "tv" ? "selected='selected'" : "")>TV</option>
+                                            <option value="ecran" @( ViewBag.cat == "ecran" ? "selected='selected'" : "")>Ecran</option>
+                                            <option value="switch" @( ViewBag.cat == "switch" ? "selected='selected'" : "")>Switch</option>
+                                            <option value="imprimante" @( ViewBag.cat == "imprimante" ? "selected='selected'" : "")>Imprimante</option>
+                                            <option value="douchette" @( ViewBag.cat == "douchette" ? "selected='selected'" : "")>Douchette</option>
+                                            <option value="point dacces" @( ViewBag.cat == "point dacces" ? "selected='selected'" : "")>point d'accès</option>
+                                            <option value="telephone" @( ViewBag.cat == "telephone" ? "selected='selected'" : "")>Appareil téléphonique</option>
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.Categorie, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+
+                </div>                <div class="input-group"></div>
+
+                <div class="form-group">
+                    <div class=" col-md-12 align-center">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </div>                <div class="input-group"></div>
+
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="body">
+                @using (Html.BeginForm("Import", "Equipements", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone" }))
+                {
+                    <span style="color:red">@Html.Raw(ViewBag.Error)</span>
+                    <span>Excel File </span><input type="file" name="excelfile" id="fileUpload" />
+                    <br />
+                    <div class="dz-message">
+                        <div class="drag-icon-cph">
+                            <i class="material-icons">touch_app</i>
+                        </div>
+                        <h3>click to import.</h3>
+                    </div>
+                    <div class="fallback">
+                        <input type="submit" value="Import" id="fileUploadExcel" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.Format != null)
+{
+    <script>
+
+        sweetAlert("Oops...!!!", "File Header format incorrect", "error");
+
+    </script>
+
+}
+
+
+@section scripts{
+    <script src="~/template/js/js dropdownlist/jquery1.9.1.js"></script>
+    <script src="~/template/js/js dropdownlist/jquery-ui-1.11.0.js"></script>
+    <script>
+        function ValidateDate() {
+            var dateAchat = $('#Dt_achat').val();
+            var dateSortie = $('#Dt_sortie').val();
+            if ((new Date(dateSortie).getTime() - new Date(dateAchat).getTime()) < 0) {
+                alert('Date Sortie doit etre supperieur a date achat');
+                $('#Dt_achat').val("");
+                $('#Dt_sortie').val("");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function ValidateIPaddress(inputText) {
+            var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (inputText.value.match(ipformat) || inputText.value == "DHCP" ) {
+                //document.form1.Ip.focus();
+                return true;
+            }
+            else {
+                alert("You have entered an invalid IP address!");
+                // document.form1.Ip.focus();
+                $('#Ip').val("");
+
+
+                return false;
+
+            }
+        }
+
+
+
+        $('#fileUploadExcel').click(function (e) {
+            if ($('#fileUpload').val() === "") {
+                sweetAlert("Oops...!!!", "SVP choisir un fichier", "error");
+                return false;
+            }
+
+        });
+
+
+    </script>
+
+}

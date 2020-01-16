@@ -1,0 +1,139 @@
+﻿@model IEnumerable<MPSIGestionSoftSony.Models.historiquepanneequipement>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+
+<h2 class="align-center" style="font-family: 'Playball', cursive;">Historique Panne Equipement </h2>
+
+
+<div class="container card">
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom_panne)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom_machine)
+                        </th>
+                        <th>
+                            Date panne
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom_panne)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom_machine)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatePE)
+                            </td>
+                            <td>
+                                @{ var id = Json.Encode(item.Id);}
+                                <a class='btn' onclick='Delete(@id)'><i class='material-icons'>delete</i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom_panne)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom_machine)
+                        </th>
+                        <th>
+                            Date panne
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/template/js/dataTable/jquery-datatable-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-bootstrap-min.js"></script>
+    <script src="~/template/js/dataTable/datatable-buttons-min.js"></script>
+    <script src="~/template/js/dataTable/jszip-min.js"></script>
+    <script src="~/template/js/dataTable/pdfmake.js"></script>
+    <script src="~/template/js/dataTable/vfsfont.js"></script>
+    <script src="~/template/js/dataTable/button-html5-min.js"></script>
+    <script src="~/template/js/dataTable/button-print.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#table').DataTable({
+                dom: "Bfrtip",
+                "language": {
+                    "emptyTable": "Pas d'historique panne equipements disponible",
+                    "infoEmpty": "Vide",
+                    "zeroRecords": "Not found",
+                    "info": "Affichage de l'element _START_ sur _END_ des _TOTAL_ elements",
+                    "search": "Recherche:",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Suivant",
+                        "previous": "Précident"
+                    },
+                },
+
+                "buttons": [
+                    { extend: "copy", className: 'btn  glyphicon glyphicon-duplicate' },
+                    { extend: 'excel', className: 'btn btn-success glyphicon glyphicon-list-alt' },
+                    { extend: 'pdf', className: 'btn btn-danger glyphicon glyphicon-file' },
+                    { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+                ]
+
+            });
+
+
+
+        });
+        //Delete Panne
+        function Delete(id) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Historique!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/HistoriquePanneEquipements/Delete/" + id
+
+                        });
+                        swal("Poof! Panne has been deleted!", {
+                            icon: "success",
+
+                        }).then(function () {
+                            location.reload();
+                        });
+                    } else {
+                        swal("Panne is safe!");
+                    }
+                });
+        }
+    </script>
+}
